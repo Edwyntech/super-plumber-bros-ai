@@ -11,8 +11,6 @@
 // -----------------------------------------------------------------------
 const TILE = 16;
 const VW = 512, VH = 448;             // viewport size in pixels
-const VW_T = VW / TILE;               // 32 cols
-const VH_T = VH / TILE;               // 28 rows
 const LEVEL_HEIGHT = 14;
 const LEVEL_Y = VH - LEVEL_HEIGHT * TILE;
 const GRAVITY = 0.45;
@@ -167,7 +165,6 @@ const Audio = (() => {
     coin:  () => { beep(987, 0.06, 'square', 0.08); setTimeout(()=>beep(1318,0.12,'square',0.08), 60); },
     stomp: () => sweep(220, 80, 0.12, 'square', 0.1),
     bump:  () => beep(160, 0.08, 'square', 0.08),
-    powerup: () => { [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,0.1,'square',0.08), i*80)); },
     die:   () => { [440,392,330,262].forEach((f,i)=>setTimeout(()=>beep(f,0.18,'triangle',0.1), i*120)); },
     clear: () => { [523,659,784,1046,1318].forEach((f,i)=>setTimeout(()=>beep(f,0.1,'square',0.08), i*90)); },
     kick:  () => sweep(300, 120, 0.1, 'sawtooth', 0.07),
@@ -821,37 +818,37 @@ function levelRows(width, draw) {
 }
 
 const LEVEL_1_1 = [
-  '                                                                                                                                                              ',
-  '                                                                                                                                                              ',
-  '                                                                                                                                                              ',
-  '                                                                                                                                                              ',
-  '                                                                                                                                                              ',
-  '                                                                                                                                                              ',
-  '                                  C                              C                                                                                            ',
-  '                       ?BB?B                CCC                                                  C C                                  CC                      ',
+  '                                                                                                                                                             ',
+  '                                                                                                                                                             ',
+  '                                                                                                                                                             ',
+  '                                                                                                                                                             ',
+  '                                                                                                                                                             ',
+  '                                                                                                                                                             ',
+  '                                  C                              C                                                                                           ',
+  '                       ?BB?B                CCC                                                  C C                                  CC                     ',
   '                                                                                                                                                          F  ',
   '                                                                                                                                                          f  ',
   '                          G               G  G               PP        PP            G  K                                                               | f  ',
-  '                                                              pp        pp                                                                              || f  ',
+  '                                                             pp        pp                                                                               ||f  ',
   '##############     ###############      ##################   pp   ###  pp     ###############     #######      ###################################    ###|f##',
   '##############     ###############      ##################   pp   ###  pp     ###############     #######      ###################################    ####f##',
 ];
 
 const LEVEL_1_2 = [
-  '                                                                                                                                                                  ',
-  '                                                                                                                                                                  ',
-  '                                                                                                                                                                  ',
-  '                                                                                                                                                                  ',
+  '                                                                                                                                                                 ',
+  '                                                                                                                                                                 ',
+  '                                                                                                                                                                 ',
+  '                                                                                                                                                                 ',
   '                       BB?BB              CCCCCC               BBBBBBBB                                                                                          ',
-  '                                                                                                                                                                  ',
-  '                                                                                                                                                                  ',
+  '                                                                                                                                                                 ',
+  '                                                                                                                                                                 ',
   '                                          PP                          PP            X X                       BB?BB                                              ',
-  '                                          pp     G                    pp           XXXXX                                                                          ',
-  '            G                  K          pp     ?B?B   K             pp          XXXXXXX           G  G                       K            G       G        F   ',
-  '                                          pp                          pp         XXXXXXXXX                                                                    f   ',
-  '                                          pp                          pp        XXXXXXXXXXX                                                                || f   ',
+  '                                          pp     G                    pp           XXXXX                                                                         ',
+  '            G                  K          pp     ?B?B   K             pp          XXXXXXX           G  G                       K           G       G         F   ',
+  '                                          pp                          pp         XXXXXXXXX                                                                   f   ',
+  '                                          pp                          pp        XXXXXXXXXXX                                                                ||f   ',
   '############     ################      ###pp##################     ###pp###############################      ##########      ###############     ############f###',
-  '############     ################      ###pp##################     ###pp###############################      ##########      ###############     #############f##',
+  '############     ################      ###pp##################     ###pp###############################      ##########      ###############     ############f###',
 ];
 
 const LEVEL_1_3 = [
@@ -862,13 +859,13 @@ const LEVEL_1_3 = [
   '                                                                                                                                                                       ',
   '              CCC          BBBBBBB?BBB              CCCCC                       BBBBB?BBBB              C C                                                            ',
   '                                                                                                                                                                       ',
-  '                                                XX                                                                          XXX                                        ',
-  '                                              XXXXX        K                                  K                            XXXXX                                       ',
-  '                  G G                       XXXXXXXX                       G   G    G G                                  XXXXXXX        G  G  G  K              F      ',
-  '                                          XXXXXXXXXX                                                                   XXXXXXXXXX                                f      ',
+  '                                                  XX                                                                         XXX                                       ',
+  '                                               XXXXX        K                                  K                           XXXXX                                       ',
+  '                   G G                      XXXXXXXX                       G   G    G G                                  XXXXXXX        G  G  G  K              F      ',
+  '                                          XXXXXXXXXX                                                                  XXXXXXXXXX                                f      ',
   '                                       XXXXXXXXXXXXX     PP                                            PP           XXXXXXXXXXXX                              | f      ',
-  '##############     #####################XXXXXXXXXXXX     pp#############################################pp########XXXXXXXXXXXXXX###################     ##########f####',
-  '##############     #####################XXXXXXXXXXXX     pp#############################################pp########XXXXXXXXXXXXXX###################     ###########f###',
+  '##############     #####################XXXXXXXXXXXX     pp############################################pp#########XXXXXXXXXXXXXX###################     ########f######',
+  '##############     #####################XXXXXXXXXXXX     pp############################################pp#########XXXXXXXXXXXXXX###################     ########f######',
 ];
 
 const LEVEL_2_1 = levelRows(150, l => {
@@ -1148,7 +1145,6 @@ class Goomba extends Entity {
       return;
     }
     this.vy = Math.min(MAX_FALL, this.vy + GRAVITY);
-    const wasOnGround = this.onGround;
     moveAndCollide(this, level, false);
     if (this.hitWallX) this.vx = -this.vx;
     this.animTime++;

@@ -32,7 +32,7 @@ plus arrow keys. Letter controls are checked with both layout-aware key values
 and physical-key fallbacks so shortcuts stay usable across keyboards.
 
 | Key                                 | Action                               |
-| ----------------------------------- | ------------------------------------ |
+|-------------------------------------|--------------------------------------|
 | **← / →** or **Q / D** or **A / D** | Move                                 |
 | **Space / ↑ / Z / W**               | Jump; hold briefly for a higher jump |
 | **↓ / S**                           | Duck                                 |
@@ -45,8 +45,8 @@ and physical-key fallbacks so shortcuts stay usable across keyboards.
 
 The game now includes **10 scrolling levels** across several biomes:
 
-| World |  Biome   | Style                                        |
-| ----- | -------- | -------------------------------------------- |
+| World | Biome    | Style                                        |
+|-------|----------|----------------------------------------------|
 | `1-1` | Meadow   | Introductory grassland                       |
 | `1-2` | Meadow   | Pipes, blocks, and wider enemy spacing       |
 | `1-3` | Twilight | Larger hills and denser enemy groups         |
